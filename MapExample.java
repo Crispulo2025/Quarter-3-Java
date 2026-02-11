@@ -2,16 +2,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapExample {
+
+    public static void printMap(Map<String, Integer> map) {
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println("Key: " + entry.getKey() +
+                               ", Value: " + entry.getValue());
+        }
+    }
+
     public static void main(String[] args) {
-        Map<String, Integer> scores = new HashMap<>();
-        
-        scores.put("Alice", 90);  // Adds key "Alice" with value 90
-        scores.put("Bob", 85);    // Adds key "Bob" with value 85
-        
-        // Add "Alice" again with a new value
-        Integer oldValue = scores.put("Alice", 95);
-        
-        System.out.println("Old value of Alice: " + oldValue);  // Outputs: 90
-        System.out.println("Updated scores: " + scores);       // Outputs: {Alice=95, Bob=85}
+        // Sample input (adding key-value pairs)
+        Map<String, Integer> students = new HashMap<>();
+        students.put("Alice", 85);
+        students.put("Bob", 92);
+        students.put("Charlie", 78);
+
+        // Calling the method
+        printMap(students);
     }
 }

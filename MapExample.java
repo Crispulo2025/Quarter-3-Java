@@ -1,22 +1,17 @@
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MapExample {
     public static void main(String[] args) {
-        // Create a HashMap of String keys and Integer values
-        Map<String, Integer> studentScores = new HashMap<>();
-
-        // Add at least five key-value pairs
-        studentScores.put("Alice", 90);
-        studentScores.put("Bob", 85);
-        studentScores.put("Charlie", 95);
-        studentScores.put("David", 88);
-        studentScores.put("Eva", 92);
-
-        // Print the map
-        System.out.println("Student scores: " + studentScores);
-
-        // Access a specific value using its key
-        System.out.println("Charlie's score: " + studentScores.get("Charlie"));
+        Map<String, Integer> scores = new HashMap<>();
+        
+        scores.put("Alice", 90);  // Adds key "Alice" with value 90
+        scores.put("Bob", 85);    // Adds key "Bob" with value 85
+        
+        // Add "Alice" again with a new value
+        Integer oldValue = scores.put("Alice", 95);
+        
+        System.out.println("Old value of Alice: " + oldValue);  // Outputs: 90
+        System.out.println("Updated scores: " + scores);       // Outputs: {Alice=95, Bob=85}
     }
 }

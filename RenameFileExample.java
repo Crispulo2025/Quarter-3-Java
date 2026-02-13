@@ -1,24 +1,26 @@
 import java.io.File;
 
 public class RenameFileExample {
+
     public static void main(String[] args) {
 
-        // Original file name
-        File oldFile = new File("oldfile.txt");
+        // Create File objects
+        File oldFile = new File("oldname.txt");
+        File newFile = new File("newname.txt");
 
-        // New file name
-        File newFile = new File("newfile.txt");
+        // Check if old file exists
+        if (!oldFile.exists()) {
+            System.out.println("The file oldname.txt does not exist.");
+            return;
+        }
 
-        // Attempt to rename
-        if (oldFile.exists()) {
-            boolean success = oldFile.renameTo(newFile);
-            if (success) {
-                System.out.println("File renamed successfully to: " + newFile.getName());
-            } else {
-                System.out.println("Failed to rename the file.");
-            }
+        // Rename the file
+        boolean renamed = oldFile.renameTo(newFile);
+
+        if (renamed) {
+            System.out.println("File renamed successfully.");
         } else {
-            System.out.println("The file " + oldFile.getName() + " does not exist.");
+            System.out.println("Failed to rename the file.");
         }
     }
 }

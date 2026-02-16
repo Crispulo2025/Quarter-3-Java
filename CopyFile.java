@@ -1,27 +1,27 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class CopyFile {
-
     public static void main(String[] args) {
-        String sourceFile = "source.txt";  // File to read from
-        String destFile = "destination.txt"; // File to write to
+        String sourceFile = "source.txt";   // File to copy from
+        String destinationFile = "copy.txt"; // File to copy to
 
-        try (FileInputStream fis = new FileInputStream(sourceFile);
-             FileOutputStream fos = new FileOutputStream(destFile)) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(destinationFile));
 
-            int b;
-            // Read byte by byte
-            while ((b = fis.read()) != -1) {
-                fos.write(b); // Write byte to destination
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line);      // Write each line
+                writer.newLine();        // Preserve line breaks
             }
 
-            System.out.println("File copied successfully from " + sourceFile + " to " + destFile);
+            reader.close();
+            writer.close();
+
+            System.out.println("Contents of \"" + sourceFile + "\" have been copied to \"" + destinationFile + "\" successfully.");
 
         } catch (IOException e) {
-            System.out.println("An error occurred while copying the file.");
-            e.printStackTrace();
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 }

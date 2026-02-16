@@ -1,26 +1,31 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class AppendToFile {
-
     public static void main(String[] args) {
-        String fileName = "sample.txt"; // File to append to
+        String fileName = "output.txt"; // File to append text to
 
-        try (Scanner sc = new Scanner(System.in);
-             FileWriter fw = new FileWriter(fileName, true)) { // 'true' enables append mode
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the text to append: ");
+        String newText = sc.nextLine();
+        sc.close();
 
-            System.out.print("Enter text to append: ");
-            String textToAppend = sc.nextLine();
+        try {
+            // FileWriter with 'true' in constructor enables append mode
+            FileWriter writer = new FileWriter(fileName, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
-            // Append text followed by a newline
-            fw.write(textToAppend + System.lineSeparator());
+            // Write new text and add a newline
+            bufferedWriter.write(newText);
+            bufferedWriter.newLine();
 
-            System.out.println("Text successfully appended to " + fileName);
+            // Close the writer
+            bufferedWriter.close();
+
+            System.out.println("Text has been appended to \"" + fileName + "\" successfully.");
 
         } catch (IOException e) {
-            System.out.println("An error occurred while writing to the file.");
-            e.printStackTrace();
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 }

@@ -1,44 +1,46 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class MergeFiles {
     public static void main(String[] args) {
-        // Input file names
-        String file1 = "file1.txt";
-        String file2 = "file2.txt";
-        // Output file name
-        String outputFile = "merged.txt";
+        Scanner scanner = new Scanner(System.in);
 
-        try {
-            // Create BufferedReader for the first file
-            BufferedReader reader1 = new BufferedReader(new FileReader(file1));
-            // Create BufferedReader for the second file
-            BufferedReader reader2 = new BufferedReader(new FileReader(file2));
-            // Create BufferedWriter for the output file
-            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+        System.out.print("Enter the number of files to merge: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // consume the newline
 
-            String line;
+        String[] inputFiles = new String[n];
 
-            // Read from first file and write to output
-            while ((line = reader1.readLine()) != null) {
-                writer.write(line);
-                writer.newLine();
+        // Ask user for input file names
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter the path of file " + (i + 1) + ": ");
+            inputFiles[i] = scanner.nextLine();
+        }
+
+        System.out.print("Enter the name of the output file: ");
+        String outputFile = scanner.nextLine();
+
+        mergeFiles(inputFiles, outputFile);
+        System.out.println("Files merged successfully into " + outputFile);
+    }
+
+    public static void mergeFiles(String[] inputFiles, String outputFile) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+            for (String file : inputFiles) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        writer.write(line);
+                        writer.newLine(); // preserve line breaks
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading file: " + file);
+                    e.printStackTrace();
+                }
             }
-
-            // Read from second file and write to output
-            while ((line = reader2.readLine()) != null) {
-                writer.write(line);
-                writer.newLine();
-            }
-
-            // Close all resources
-            reader1.close();
-            reader2.close();
-            writer.close();
-
-            System.out.println("Files have been merged into " + outputFile);
-
         } catch (IOException e) {
-            System.out.println("An error occurred: " + e.getMessage());
+            System.out.println("Error writing to output file: " + outputFile);
+            e.printStackTrace();
         }
     }
 }
